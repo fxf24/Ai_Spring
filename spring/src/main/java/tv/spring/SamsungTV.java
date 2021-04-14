@@ -1,6 +1,9 @@
-package tv;
+package tv.spring;
 
 public class SamsungTV implements TV{
+	public SamsungTV() {
+		System.out.println("삼성TV생성자호출");
+	}
 	public void powerOn() {
 		System.out.println("삼성 tv - 전원켜다");
 	}

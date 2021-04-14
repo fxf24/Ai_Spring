@@ -1,4 +1,4 @@
-package tv;
+package tv.spring;
 
 public class LGTV implements TV {
 	public void powerOn() {
