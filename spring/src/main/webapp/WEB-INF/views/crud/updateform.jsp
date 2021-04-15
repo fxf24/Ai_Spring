@@ -14,12 +14,11 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h1>로그인폼</h1>
-<form action="<%=request.getContextPath()%>/login" method="post">
-아이디:<input type="text" name="id"><br>
-암호: <input type="password" name="pw"><br>
-<input type=submit value="로그인">
+<form action="<%=request.getContextPath() %>/crud/update" method="post">
+제목<input type=text name="title" value="${title }"><br>
+내용<input type=text name="contents" value="${contents }"><br>
+작성자<input type=text name="writer" value="${writer }"><br>
+<input type=submit name="수정"><br>
 </form>
-
 </body>
 </html>
