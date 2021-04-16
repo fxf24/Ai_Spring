@@ -1,9 +1,14 @@
-package mybatis;
+package spring_mybatis;
 
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service("service")
 public class EmpServiceImpl implements EmpService{
+	@Autowired
 	EmpDAO dao;
 	
 	public void setDao(EmpDAO dao) {

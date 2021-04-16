@@ -1,4 +1,4 @@
-package mybatis;
+package spring_mybatis;
 
 import java.util.List;
 import java.util.Map;

@@ -12,9 +12,9 @@
 ## DI
 
 * 자바로 DI구현 해보기
-  * [TV예제]
+  * [TV예제](./spring/src/main/java/tv)
 * Spring을 이용하여 DI구현
-  * TV예제
+  * [TV예제](./spring/src/main/java/tv/spring)
 
 | xml                                                          | @                                                            |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -24,5 +24,28 @@
 
 ## MVC
 
-* 자바로 spring의 MVC를 구현해보자
+* 자바로 spring의 [MVC](./nonspringmvc/src/main/java/test)를 구현해보자 [jsp파일](./nonspringmvc/src/main/webapp/hello.jsp)
+* Spring MVC
+  * [memberservice](./spring/src/main/java/memberservice)
+  * Annotation을 이용 memberservice [변경](./spring/src/main/java/memberanno) 
+  * 
+
+
+
+## Mybatis
+
+* mybatis는 jdbc가 처리하는 상당부분의 코드와 파라미터 설정 및 결과 매핑을 대신해준다.
+
+* Mybatis 이용 hr계정에 DB연결하여 데이터 가져오기
+
+  * 스프링 Annotation을 적용하지 않은 [mybatis](./spring/src/main/java/mybatis) 패키지
+
+  * 스프링 Annotation을 적용한 [mybatis](./spring/src/main/java/spring_mybatis)
+
+  * | xml파일             | 변경 및 추가사항                                             |
+    | ------------------- | ------------------------------------------------------------ |
+    | pom.xml             | <dependency><br/>    <groupId>org.mybatis</groupId><br/>    <artifactId>mybatis</artifactId><br/>    <version>3.4.6</version><br/></dependency><br/>		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring --><br/><dependency><br/>    <groupId>org.mybatis</groupId><br/>    <artifactId>mybatis-spring</artifactId><br/>    <version>1.3.2</version><br/></dependency><br/><br/><!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc --><br/><dependency><br/>    <groupId>org.springframework</groupId><br/>    <artifactId>spring-jdbc</artifactId><br/>    <version>4.3.18.RELEASE</version><br/></dependency><br/><br/><!-- JDK 8, 9 사용 중일 경우 --><br/><!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 --><br/><dependency><br/>    <groupId>com.oracle.database.jdbc</groupId><br/>    <artifactId>ojdbc8</artifactId><br/>    <version>19.7.0.0</version><br/></dependency> |
+    | servlet-context.xml | <context:component-scan base-package="spring_mybatis" />     |
+    | web.xml             | <context-param><br/>		<param-name>contextConfigLocation</param-name><br/>		<param-value><br/>		classpath:spring_mybatis/mybatis_spring.xml<br/>		</param-value><br/>	</context-param> |
+
   * 

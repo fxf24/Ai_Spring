@@ -1,4 +1,4 @@
-package mybatis;
+package spring_mybatis;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,23 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class EmpMain {
 	public static void main(String[] args) throws IOException {
-		//db 연결 xml
-		SqlSessionFactoryBuilder builder = 
-				new SqlSessionFactoryBuilder();
-		SqlSessionFactory factory =  builder.build(Resources.getResourceAsReader("mybatis/db-config.xml"));
-		SqlSession session = factory.openSession(true);
+		ApplicationContext factory = new ClassPathXmlApplicationContext("spring_mybatis/mybatis_spring.xml");
+//		SqlSession session = factory.getBean("sqlSession", SqlSession.class);
+//		System.out.println(session);
 		//bean태그 없다 @Component
-		EmpService service = new EmpServiceImpl();
-		EmpDAO dao = new EmpDAO();
-		dao.setSession(session);
-		((EmpServiceImpl)service).setDao(dao);
+		EmpService service = factory.getBean("service", EmpService.class);
+//		EmpDAO dao = new EmpDAO();
+//		dao.setSession(session);
+//		((EmpServiceImpl)service).setDao(dao);
 		//test1: 1개 vo
 //		EmpVO vo = service.getOneEmp(200);
 //		System.out.println(vo);
@@ -88,13 +89,13 @@ public class EmpMain {
 		
 		
 		//test9 - HashMap
-		Map<String, String> map = new HashMap<>();
-		map.put("dept", "50");
-		map.put("email", "a2@bb.com");
-		map.put("id", "6");
-		
-		service.updateMap(map);
-		System.out.println("수정완료");
+//		Map<String, String> map = new HashMap<>();
+//		map.put("dept", "50");
+//		map.put("email", "a2@bb.com");
+//		map.put("id", "6");
+//		
+//		service.updateMap(map);
+//		System.out.println("수정완료");
 	}
 }
 
