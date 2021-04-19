@@ -152,7 +152,7 @@
 		<!-- spring mvc 프로젝트명 spring 이면 http://127.0.0.1/spring -->
       <Context docBase="nonspringmvc" path="/nonspringmvc" reloadable="true" source="org.eclipse.jst.jee.server:nonspringmvc"/>
       <Context docBase="spring" path="/spring" reloadable="true" source="org.eclipse.jst.jee.server:spring"/>
-      <Context docBase="mytest" path="/mvc" reloadable="true" source="org.eclipse.jst.jee.server:mytest"/></Host>
+      <Context docBase="mytest" path="/mvc" reloadable="true" source="org.eclipse.jst.jee.server:mytest"/><Context docBase="assignment" path="/ment" reloadable="true" source="org.eclipse.jst.jee.server:assignment"/></Host>
     </Engine>
   </Service>
 </Server>

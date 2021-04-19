@@ -48,4 +48,22 @@
     | servlet-context.xml | <context:component-scan base-package="spring_mybatis" />     |
     | web.xml             | <context-param><br/>		<param-name>contextConfigLocation</param-name><br/>		<param-value><br/>		classpath:spring_mybatis/mybatis_spring.xml<br/>		</param-value><br/>	</context-param> |
 
-  * 
+
+* 
+
+
+
+## ajax
+
+* ajax를 사용하기 위해선 다음과 같은 추가사항을 입력해주어야한다
+
+* | xml     | 추가사항                                                     |
+  | ------- | ------------------------------------------------------------ |
+  | pom.xml | <dependency><br/>	<groupId>com.fasterxml.jackson.core</groupId><br/>	<artifactId>jackson-databind</artifactId><br/>	<version>2.9.3</version><br/></dependency> |
+
+* ajax를 이용한 실습
+
+  * [ajaxlogin](./spring/src/main/webapp/WEB-INF/views/ajax/loginajax.jsp) jsp 파일
+  * [ajaxcontroller](./spring/src/main/java/ajax/LoginAjaxController.java) ajax controller
+  * [ajax전용](./spring/src/main/java/ajax/AllAjaxController.java) 컨트롤러
+
