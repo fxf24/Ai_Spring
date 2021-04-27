@@ -15,5 +15,7 @@ $(document).ready(function(){
 </head>
 <body>
 <h1>hello.jsp 실행중입니다.</h1>
+<h3>이미지 출력</h3>
+<img alt="" src="/upload/google.png">
 </body>
 </html>
