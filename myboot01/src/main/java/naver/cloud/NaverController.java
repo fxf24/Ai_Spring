@@ -15,6 +15,8 @@ public class NaverController {
 	NaverFaceService service;
 	@Autowired
 	NaverFaceService2 service2;
+	@Autowired
+	NaverOCRService ocrservice;
 	
 	@RequestMapping("/faceinput")
 	public ModelAndView faceinput() {
@@ -60,7 +62,29 @@ public class NaverController {
 		System.out.println(result);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("faceResult", result);
-		mv.setViewName("/naver/face2");
+		mv.setViewName("/naver/face3");
+		return mv;
+	}
+	
+	@RequestMapping("/ocrinput")
+	public ModelAndView ocrinput() {
+		File f = new File("C:/python_source/images");
+		String[] filelist = f.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("filelist", filelist);
+		mv.setViewName("/naver/ocrinput");
+		//faceinput.jsp구현
+		//filelist 모델값을 <a href="http://127.0.0.1:9091/face 호출하면서 파일이름 전달">파일이름 </a>
+		return mv;
+	}
+	@RequestMapping(value = "/ocr", method = RequestMethod.GET)
+	public ModelAndView ocr(String image) {
+		String result = ocrservice.test(image);
+		System.out.println(result);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("ocrResult", result);
+		mv.setViewName("/naver/ocr");
 		return mv;
 	}
 }

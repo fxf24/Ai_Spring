@@ -7,7 +7,7 @@
 window.onload = function(){
 	var samplecanvas = document.getElementById("samplecanvas")
 	var samplecontext = samplecanvas.getContext("2d")
-	samplecontext.font = "25px batang"
+	/*samplecontext.font = "25px batang"
 	samplecontext.fillStyle="blue"
 	samplecontext.fillText("캔버스위에 글씨를 씁니다.", 100, 100);
 	samplecontext.fillRect(200, 200, 100, 50)
@@ -15,6 +15,20 @@ window.onload = function(){
 	samplecontext.strokeStyle="green"
 	samplecontext.lineWidth=3
 	samplecontext.strokeRect(300, 300, 50, 50)
+	*/
+	var sampleImage = new Image()
+	sampleImage.src = "/faceimages/song.jpg"
+	sampleImage.onload = function(){
+		samplecontext.drawImage(sampleImage, 0, 0, sampleImage.width, sampleImage.height)
+		var copyImage = samplecontext.getImageData(0, 0, 100, 100)
+	
+		var targetcanvas = document.getElementById("targetcanvas")
+		var targetcontext = targetcanvas.getContext("2d")
+		targetcontext.putImageData(copyImage, 50, 50)
+	
+	}
+	
+	
 }
 
 </script>
@@ -23,5 +37,6 @@ window.onload = function(){
 <body>
 <h1>캔버스</h1>
 <canvas id="samplecanvas" width=400 height=400 style="border: solid 2px pink"></canvas>
+<canvas id="targetcanvas" width=400 height=400 style="border: solid 2px pink"></canvas>
 </body>
 </html>

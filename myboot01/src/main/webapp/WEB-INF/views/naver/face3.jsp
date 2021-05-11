@@ -20,75 +20,6 @@ $(document).ready(function(){
 </head>
 <body>
 <h1>얼굴 인식 서비스</h1>
-<!-- // 1개의 얼굴을 감지한 경우
-{
- "info": {
-   "size": {
-     "width": 900,
-     "height": 1349
-   },
-   "faceCount": 1
- },
- "faces": [{
-   "roi": {
-     "x": 235,
-     "y": 227,
-     "width": 326,
-     "height": 326
-   },
-   "landmark": {
-     "leftEye": {
-       "x": 311,
-       "y": 289
-     },
-     "rightEye": {
-       "x": 425,
-       "y": 287
-     },
-     "nose": {
-       "x": 308,
-       "y": 346
-     },
-     "leftMouth": {
-       "x": 306,
-       "y": 425
-     },
-     "rightMouth": {
-       "x": 383,
-       "y": 429
-     }
-   },
-   "gender": {
-     "value": "male",
-     "confidence": 0.91465
-   },
-   "age": {
-     "value": "22~26",
-     "confidence": 0.742265
-   },
-   "emotion": {
-     "value": "simile",
-     "confidence": 0.460465
-   },
-   "pose": {
-     "value": "frontal_face",
-     "confidence": 0.937789
-   }
- }]
-}
-
-// 감지한 얼굴이 없을 경우
-{
- 	"info": {
- 		"size": {
- 			"width": 700,
- 			"height": 800
- 		},
- 		"faceCount": 0
- 	},
- 	"faces": []
- }
- -->
 
 <%
 String faceResult = (String)request.getAttribute("faceResult");
@@ -97,6 +28,7 @@ JSONObject obj = new JSONObject(faceResult);
 Object imsi = obj.get("faces");
 JSONArray faces = (JSONArray)imsi;
 boolean find = false;
+String image = request.getParameter("image");
 
 for(Object face : faces){
 	JSONObject roi = (JSONObject)((JSONObject)face).get("roi");
@@ -121,14 +53,57 @@ for(Object face : faces){
 	value = (String)age.get("value");
 	confidence = (BigDecimal)age.get("confidence");
 	out.println("나이=" + value + ", 나이일 확률= " + Math.round(confidence.doubleValue() * 100) + "%<br>");
+%>	
+<script >
+	var x = <%=x %>
+	var y = <%=y %>
+	var width = <%=width %>
+	var height = <%=height %>
 	
-}
+	window.onload = function(){
+		var samplecanvas = document.getElementById("samplecanvas")
+		var samplecontext = samplecanvas.getContext("2d")
+		
+		var sampleImage = new Image()
+		sampleImage.src = "/faceimages/<%=image%>"
+		sampleImage.onload = function(){
+			samplecontext.drawImage(sampleImage, 0, 0, sampleImage.width, sampleImage.height)
+			var copyImage = samplecontext.getImageData(x, y, width, height)
+		
 
-String image = request.getParameter("image");
+			//색상반전 - 이미지 구성하는 기본단위 
+			var faceimage = samplecontext.getImageData(x, y, width, height)
+			var data = faceimage.data
+			var numpixels = data.length;
+			for(var i = 0; i<numpixels; i=i+4){
+				data[i] = 255 - data[i]//r
+				data[i+1] = 255 - data[i+1]//g
+				data[i+2] = 255 - data[i+2]//b
+			}
+			var targetcanvas = document.getElementById("targetcanvas")
+			var targetcontext = targetcanvas.getContext("2d")
+			targetcontext.putImageData(faceImage, width, height)
+		}
+		
+	}
+</script>
+	
+<%	
+}
 if(!find){
 	out.println("얼굴을 찾을 수 없습니다.");
 }
+
+/*	1. id = "samplecanvas"에 image 변수 저장된 파일 그리기
+	2. 1번 이미지에서 얼굴 x, y, width, height 값 가져오기
+	3. 1번 이미지에서 2번 영역 얼굴만 복사하여 id="targetcanvas"로 붙여넣기
+*/
+
 %>
-<img src="/faceimages/<%=image%>">
+
+<h1>이미지 전체 캔버스</h1>
+<canvas id="samplecanvas" width=500 height=500 style="border: solid 2px pink"></canvas>
+<h1>얼굴만 캔버스</h1>
+<canvas id="targetcanvas" width=300 height=300 style="border: solid 2px pink"></canvas>
 </body>
 </html>

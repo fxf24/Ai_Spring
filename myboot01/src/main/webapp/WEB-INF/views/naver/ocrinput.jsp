@@ -1,8 +1,3 @@
-<%@page import="java.math.BigDecimal"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="ch.qos.logback.core.pattern.LiteralConverter"%>
-<%@page import="java.util.Dictionary"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -22,10 +17,12 @@ $(document).ready(function(){
 <%
 String[] filelist = (String[])request.getAttribute("filelist");
 for(String file : filelist){
+	if(file.contains("font")){
 %>
 <img src="/faceimages/<%=file%>" width=100 height=100><br>
-<a href="/face2?image=<%=file %>"> <%=file %></a><br>
+<a href="/ocr?image=<%=file %>"> <%=file %></a><br>
 <% 
+	}
 }
 
 %>
