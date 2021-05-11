@@ -67,6 +67,14 @@
 			<artifactId>ojdbc8</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- for json --> 
+     <dependency>           
+   <groupId>org.json</groupId>
+   <artifactId>json</artifactId>
+   <version>20201115</version>
+ </dependency>
+		
 	</dependencies>
 
 	<build>

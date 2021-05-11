@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 //<context:component-scan base-package="upload
@@ -28,12 +29,13 @@ public class UploadController {
 	}
 	
 	@RequestMapping(value="/fileupload", method=RequestMethod.POST)
+	@ResponseBody
 	public String uploadresult(@ModelAttribute("vo")  UploadVO vo) throws IllegalStateException, IOException {
 		//ModelAndView mv = new ModelAndView();
 		//mv.addObject("", vo);
 		MultipartFile multipartfile1 = vo.getFile1();
 		MultipartFile multipartfile2 = vo.getFile2();
-		
+		System.out.println(vo.getName() + ":" + vo.getDescription());
 		System.out.println(multipartfile1.getOriginalFilename());
 		
 		//업로드한 파일명 추출(=클라이언트원본파일명)
@@ -61,6 +63,7 @@ public class UploadController {
 		
 		multipartfile1.transferTo(file1);
 		multipartfile2.transferTo(file2);
-		return "/upload/uploadresult";//뷰에서 업로드 파일명 출력 ???
+		//return "/upload/uploadresult";//뷰에서 업로드 파일명 출력 ???
+		return "잘 받았습니다"; //ajax 클라이언트 {"a":"b"}
 	}
 }
