@@ -17,6 +17,8 @@ public class NaverController {
 	NaverFaceService2 service2;
 	@Autowired
 	NaverOCRService ocrservice;
+	@Autowired
+	NaverObjectDetection odservice;
 	
 	@RequestMapping("/faceinput")
 	public ModelAndView faceinput() {
@@ -52,8 +54,6 @@ public class NaverController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("filelist", filelist);
 		mv.setViewName("/naver/faceinput2");
-		//faceinput.jsp구현
-		//filelist 모델값을 <a href="http://127.0.0.1:9091/face 호출하면서 파일이름 전달">파일이름 </a>
 		return mv;
 	}
 	@RequestMapping(value = "/face2", method = RequestMethod.GET)
@@ -74,8 +74,6 @@ public class NaverController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("filelist", filelist);
 		mv.setViewName("/naver/ocrinput");
-		//faceinput.jsp구현
-		//filelist 모델값을 <a href="http://127.0.0.1:9091/face 호출하면서 파일이름 전달">파일이름 </a>
 		return mv;
 	}
 	@RequestMapping(value = "/ocr", method = RequestMethod.GET)
@@ -85,6 +83,26 @@ public class NaverController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("ocrResult", result);
 		mv.setViewName("/naver/ocr");
+		return mv;
+	}
+	
+	@RequestMapping("/odinput")
+	public ModelAndView odinput() {
+		File f = new File("C:/python_source/images");
+		String[] filelist = f.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("filelist", filelist);
+		mv.setViewName("/naver/odinput");
+		return mv;
+	}
+	@RequestMapping(value = "/od", method = RequestMethod.GET)
+	public ModelAndView od(String image) {
+		String result = odservice.test(image);
+		System.out.println(result);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("odResult", result);
+		mv.setViewName("/naver/od");
 		return mv;
 	}
 }
