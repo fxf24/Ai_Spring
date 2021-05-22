@@ -1,4 +1,4 @@
-package naver.cloud;
+package project_test;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,8 +13,10 @@ import java.net.URLConnection;
 
 import org.springframework.stereotype.Service;
 
+import naver.cloud.NaverService;
+
 @Service
-public class NaverFaceService2 implements NaverService{
+public class NaverObjectDetection2 implements NaverService{
 
 	@Override
 	public String test(String image) {
@@ -28,9 +30,9 @@ public class NaverFaceService2 implements NaverService{
 	    
         try {
             String paramName = "image"; // 파라미터명은 image로 지정
-            String imgFile = "C:/python_source/images/"+image;
+            String imgFile = "C:/upload/"+image;
             File uploadFile = new File(imgFile);
-            String apiURL = "https://naveropenapi.apigw.ntruss.com/vision/v1/face"; // 유명인 얼굴 인식
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/vision-obj/v1/detect"; // od
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setUseCaches(false);

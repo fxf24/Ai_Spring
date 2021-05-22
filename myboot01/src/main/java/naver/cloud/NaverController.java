@@ -19,6 +19,12 @@ public class NaverController {
 	NaverOCRService ocrservice;
 	@Autowired
 	NaverObjectDetection odservice;
+	@Autowired
+	NaverPoseService poseservice;
+	@Autowired
+	NaverSpeechService speechservice;
+	@Autowired
+	NaverVoiceService voiceservice;
 	
 	@RequestMapping("/faceinput")
 	public ModelAndView faceinput() {
@@ -103,6 +109,78 @@ public class NaverController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("odResult", result);
 		mv.setViewName("/naver/od");
+		return mv;
+	}
+	
+	@RequestMapping("/poseinput")
+	public ModelAndView poseinput() {
+		File f = new File("C:/python_source/images");
+		String[] filelist = f.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("filelist", filelist);
+		mv.setViewName("/naver/poseinput");
+		return mv;
+	}
+	@RequestMapping(value = "/pose", method = RequestMethod.GET)
+	public ModelAndView pose(String image) {
+		String result = poseservice.test(image);
+		System.out.println(result);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("poseResult", result);
+		mv.setViewName("/naver/pose");
+		return mv;
+	}
+	
+	@RequestMapping("/speechinput")
+	public ModelAndView speechinput() {
+		File f = new File("C:/python_source/images");
+		String[] filelist = f.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("filelist", filelist);
+		mv.setViewName("/naver/speechinput");//image=mp3파일 & lang=언어
+		return mv;
+	}
+	@RequestMapping(value = "/speech", method = RequestMethod.GET)
+	public ModelAndView speech(String image, String lang) {
+		String result = "";
+		if(lang == null) {
+			result = speechservice.test(image);
+		}
+		else {
+			result = speechservice.test(image, lang);
+		}
+		System.out.println(result);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("speechResult", result);
+		mv.setViewName("/naver/speech");
+		return mv;
+	}
+	
+	@RequestMapping("/voiceinput")
+	public ModelAndView voiceinput() {
+		File f = new File("C:/python_source/images");
+		String[] filelist = f.list();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("filelist", filelist);
+		mv.setViewName("/naver/voiceinput");//image=mp3파일 & lang=언어
+		return mv;
+	}
+	@RequestMapping(value = "/voice", method = RequestMethod.GET)
+	public ModelAndView voice(String image, String speaker) {
+		String result;
+		if(speaker == null) {
+			result = voiceservice.test(image);
+		}
+		else {
+			result = voiceservice.test(image, speaker);
+		}
+		System.out.println(result);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("voiceResult", result);
+		mv.setViewName("/naver/voice");
 		return mv;
 	}
 }

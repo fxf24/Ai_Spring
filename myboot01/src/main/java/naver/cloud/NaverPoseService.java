@@ -14,7 +14,7 @@ import java.net.URLConnection;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NaverFaceService2 implements NaverService{
+public class NaverPoseService implements NaverService{
 
 	@Override
 	public String test(String image) {
@@ -30,7 +30,7 @@ public class NaverFaceService2 implements NaverService{
             String paramName = "image"; // 파라미터명은 image로 지정
             String imgFile = "C:/python_source/images/"+image;
             File uploadFile = new File(imgFile);
-            String apiURL = "https://naveropenapi.apigw.ntruss.com/vision/v1/face"; // 유명인 얼굴 인식
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/vision-pose/v1/estimate";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setUseCaches(false);
@@ -80,8 +80,7 @@ public class NaverFaceService2 implements NaverService{
             System.out.println(e);
             return e.toString();
         }
-        return response.toString(); //서버로부터의 결과(오류(json아닌형태 리턴), 정상(json형태리턴))
+        return response.toString();
 	}
-
 
 }

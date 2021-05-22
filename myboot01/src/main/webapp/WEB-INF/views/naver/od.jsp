@@ -51,11 +51,14 @@ $(document).ready(function(){
 				var y2 = boxes[i][2]*image.height
 				var x2 = boxes[i][3]*image.width
 				
-				//이름 : 00% 출력
-				context.fillText(names[i]+" : " + parseInt(confidence[i]*100) + "%", x1+10, y1+10)
+				if(!(names[i]=="person")){
+					//이름 : 00% 출력
+					context.fillText(names[i]+" : " + parseInt(confidence[i]*100) + "%", x1+10, y1+10)
+					
+					//사각형 그려서 출력
+					context.strokeRect(x1+10, y1+10, x2-x1, y2-y1)
+				}
 				
-				//사각형 그려서 출력
-				context.strokeRect(x1+10, y1+10, x2-x1, y2-y1)
 			//}//if end
 		}//for end
 	}//image onload end
@@ -120,6 +123,6 @@ window.onload = function(){
 <div id="count"></div>
 <div id="names"></div>
 <div id="confidence"></div>
-<canvas id="imagecanvas" width=500 height=500 style="border: 2px solid pink"></canvas>
+<canvas id="imagecanvas" width=1000 height=1000 style="border: 2px solid pink"></canvas>
 </body>
 </html>

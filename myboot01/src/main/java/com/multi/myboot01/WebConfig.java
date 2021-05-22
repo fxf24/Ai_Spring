@@ -13,6 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:///c:/upload/");//실제경로
         registry.addResourceHandler("/faceimages/**")
         		.addResourceLocations("file:///c:/python_source/images/");
+        registry.addResourceHandler("/projecttest/**")
+				.addResourceLocations("file:///c:/upload/");
 
     }
 }

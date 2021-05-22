@@ -83,4 +83,5 @@ public class NaverObjectDetection implements NaverService{
         return response.toString(); //서버로부터의 결과(오류(json아닌형태 리턴), 정상(json형태리턴))
 	}
 
+
 }

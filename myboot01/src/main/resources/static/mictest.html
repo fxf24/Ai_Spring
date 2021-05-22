@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>마이크 테스트</title>
+    <script src="/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+   <button id="record">녹음</button>
+    <button id="stop">정지</button>
+    <div id="sound-clips"></div>
+    <script>
+        const record = document.getElementById("record")
+        const stop = document.getElementById("stop")
+        const soundClips = document.getElementById("sound-clips")
+
+        if (navigator.mediaDevices) {
+            console.log('getUserMedia supported.')
+            const constraints = {
+                audio: true
+            }
+            let chunks = []
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(stream => {
+                    const mediaRecorder = new MediaRecorder(stream)
+                    record.onclick = () => {
+                        mediaRecorder.start()
+                        console.log(mediaRecorder.state)
+                        console.log("recorder started")
+                        record.style.background = "red"
+                        record.style.color = "black"
+                    }
+                    stop.onclick = () => {//정지 버튼 클릭시에
+                        mediaRecorder.stop()//녹음 정지시켜라
+                        console.log(mediaRecorder.state)
+                        console.log("recorder stopped")
+                        record.style.background = ""
+                        record.style.color = ""
+                    }
+					//녹음 정지시킨 상태가 되면 실행하라
+                    mediaRecorder.onstop = e => {
+                        console.log("data available after MediaRecorder.stop() called.")
+                        const clipName = "mictest"+new Date().getTime().toString().substring(10);
+						//audio 태그 만들어라
+                        const audio = document.createElement('audio')
+ 						//a태그 만들어라
+ 						const a = document.createElement('a')
+                        //controls 속성 만들어라
+                        audio.setAttribute('controls', '')
+                        audio.controls = true
+                        //auido  태그를 sound-clips에 포함하라 
+                        soundClips.appendChild(audio)
+                        //a 태그를 sound-clips에 포함하라
+                        soundClips.appendChild(a)
+                        //chunks에 저장된 녹음 데이터를 audio 양식으로 만들어라
+                        const blob = new Blob(chunks, {
+                            'type': 'audio/mp3'
+                        })
+                        chunks = []
+                        const audioURL = URL.createObjectURL(blob)
+                        audio.src = audioURL
+                        
+                        //파일 저장
+                        /* a.href=audioURL//녹음데이터 url
+                        a.download = clipName
+                        a.innerHTML = "MP3로 저장"
+                         */
+                        //내 스프링 서버 녹음 데이터 업로드
+                        //자바스크립트FormData 객체 - <form multi... 
+                        //<input type=file name="f1"
+                        var formData = new FormData()//form
+						formData.append("file", blob, clipName+".mp3")//input
+						$.ajax({
+							url:'/mp3upload',
+							type:'post',
+							data:formData,
+							processData:false,
+							contentType:false,
+							success:function(response){
+								$.ajax({
+									url:'/chatbotspeech',
+									type:'get',
+									data:{"mp3file": clipName+".mp3", "lang":"kor"},
+									success:function(res){
+										alert(res)
+									}
+								})
+							}
+						})
+                        
+						//chatspeech
+                    }//mediaRecorder.onstop
+
+                    //녹음 시작시킨 상태가 되면 chunks에 녹음 데이터를 저장하라 
+                    mediaRecorder.ondataavailable = e => {
+                        chunks.push(e.data)
+                    }
+                })
+                .catch(err => {
+                    console.log('The following error occurred: ' + err)
+                })
+        }
+    </script>
+</body>
+</html>

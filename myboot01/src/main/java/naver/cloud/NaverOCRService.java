@@ -110,5 +110,5 @@ public class NaverOCRService implements NaverService{
 		out.write(("--" + boundary + "--\r\n").getBytes("UTF-8"));
 	}
 	out.flush();
-}
+	}
 }
