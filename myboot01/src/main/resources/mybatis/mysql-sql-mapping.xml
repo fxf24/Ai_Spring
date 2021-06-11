@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="spring_mybatis.EmpDAO">
+
+<select id="getOneEmp" resultType="empVO" parameterType="int">
+select * from employees where employee_id = #{employee_id}
+</select>
+
+<select id="getAllEmp" resultType="empVO">
+select * from employees
+</select>
+
+<select id="getEmpPage" resultType="empVO" parameterType="int[]">
+SELECT employee_id, first_name, salary
+FROM (
+    SELECT @ROWNUM := @ROWNUM + 1 AS R, e.*
+    FROM employees e, (SELECT @ROWNUM := 0) R
+    order by hire_date
+) A
+where R between 
+	<foreach collection="array" item="num"  separator="and">
+	#{num}
+	</foreach>	 
+
+</select>
+
+<select id="checkEmp" parameterType="empVO" resultType="empVO">
+select employee_id, email from employees
+where employee_id=#{employee_id}
+or email=#{email}
+</select>
+
+<select id="checkJob" parameterType="empVO" resultType="String">
+select job_id from jobs
+where job_id=#{job_id}
+</select>
+
+<insert id="insertEmp" parameterType="empVO">
+insert into employees(employee_id, first_name, last_name, email, job_id, hire_date)
+values(#{employee_id}, #{first_name}, #{last_name}, #{email}, #{job_id}, sysdate())
+</insert>
+
+</mapper>
+
+
+
+

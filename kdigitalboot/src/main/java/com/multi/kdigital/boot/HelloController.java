@@ -14,11 +14,5 @@ public class HelloController {
 //		return m;
 //	}
 	
-	@RequestMapping("/") //부트 http://localhost:9090
-	public ModelAndView hello() {
-		ModelAndView m = new ModelAndView();
-		m.addObject("model", "hello boot~");
-		m.setViewName("name");
-		return m;
-	}
+	
 }

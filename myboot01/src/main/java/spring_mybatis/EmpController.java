@@ -27,8 +27,9 @@ public class EmpController {
 	//employees테이블 page 변수 전달값이 보여줄 페이지.한페이지당 출력 갯수 10개. 입사일이 빠른 사원부터 출력
 	@RequestMapping("/emplistpage")
 	public ModelAndView getEmpPage(int page){//page 변수 전달값이 보여줄 페이지. 한페이지당 출력갯수 10개
-		page = (page-1)*10 +1;
-		List<EmpVO> list = service.getEmpPage(page);
+		int[] pages = {(page-1)*10 +1, (page-1)*10 +11};
+		
+		List<EmpVO> list = service.getEmpPage(pages);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("emplist", list);
 		mv.setViewName("/mybatis/emplist");

@@ -1,7 +1,6 @@
 package spring_mybatis;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class EmpServiceImpl implements EmpService{
 		return dao.getAllEmp();
 	}
 	@Override
-	public List<EmpVO> getEmpPage(int page) {
+	public List<EmpVO> getEmpPage(int[] page) {
 		// TODO Auto-generated method stub
 		return dao.getEmpPage(page);
 	}

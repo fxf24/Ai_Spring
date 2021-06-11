@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/faceimages/**")
         		.addResourceLocations("file:///c:/python_source/images/");
         registry.addResourceHandler("/projecttest/**")
-				.addResourceLocations("file:///c:/upload/");
+				.addResourceLocations("file:///c:/python_source/upload/");
 
     }
 }
